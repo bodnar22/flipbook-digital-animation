@@ -3,6 +3,8 @@ import numpy as np
 from pytube import YouTube
 import os
 import time
+import moviepy
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 
 # https://youtu.be/bGKRrIOG-V0?si=y_Ju83Vr8Quwdjrf template with white sides
 # ссылка на загружаемое видео
@@ -24,6 +26,14 @@ def video_download():
     print(yt.streams)
     yt.streams.get_by_resolution('360p').download()
     print("Видео успешно загружено")
+
+    # Обрезка видео
+    start_time = 2  # Начальное время в секундах
+    end_time = 30  # Конечное время в секундах
+    input_file = 'video.mp4'
+    output_file = 'output_video.mp4'
+
+    ffmpeg_extract_subclip(input_file, start_time, end_time, targetname=output_file)
 
 
 def make_shots():
